@@ -1,0 +1,20 @@
+{
+  "name": "nova-rtc",
+  "version": "0.0.1",
+  "description": "nova-rtc",
+  "main": "./index.ts",
+  "scripts": {
+    "test": "",
+    "start": "tsc -w"
+  },
+  "author": "pgYou",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/events": "^3.0.0",
+    "@types/node": "^18.15.11",
+    "typescript": "^4.8.2"
+  },
+  "dependencies": {
+    "events": "^3.3.0"
+  }
+}

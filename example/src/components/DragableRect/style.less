@@ -1,0 +1,43 @@
+.dragable-rect {
+  position: absolute;
+  &-dot {
+    display: none;
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: #fff;
+    border-radius: 50%;
+    transform-origin: center center;
+    &.left-top {
+      left: 0;
+      top: 0;
+      transform: translate(-50%, -50%);
+      cursor: nwse-resize;
+    }
+    &.left-bottom {
+      transform: translate(-50%, 50%);
+      left: 0;
+      bottom: 0;
+      cursor: nesw-resize;
+    }
+    &.right-top {
+      right: 0;
+      top: 0;
+      transform: translate(50%, -50%);
+      cursor: nesw-resize;
+    }
+    &.right-bottom {
+      transform: translate(50%, 50%);
+      right: 0;
+      bottom: 0;
+      cursor: nwse-resize;
+    }
+  }
+  &[data-active='true'] {
+    border: 1px solid #fff;
+    cursor: move;
+    .dragable-rect-dot {
+      display: block;
+    }
+  }
+}
