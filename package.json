@@ -2,7 +2,7 @@
   "name": "nova-rtc",
   "version": "0.0.1",
   "description": "nova-rtc",
-  "main": "./index.ts",
+  "main": "./dist/index.js",
   "scripts": {
     "test": "",
     "start": "tsc -w"

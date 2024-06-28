@@ -12,7 +12,8 @@
     "events": "^3.3.0",
     "lodash": "^4.17.21",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "nova-rtc": "file:.."
   },
   "devDependencies": {
     "@types/events": "^3.0.0",
