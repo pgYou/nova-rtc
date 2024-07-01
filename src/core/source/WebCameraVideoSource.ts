@@ -1,53 +1,53 @@
-import { BaseVideoSource } from './BaseSource';
+import { BaseVideoSource } from './BaseSource'
 
-export type WebCameraVideoSourceConstraintType = MediaTrackConstraintSet;
+export type WebCameraVideoSourceConstraintType = MediaTrackConstraintSet
 
 export default class WebCameraVideoSource extends BaseVideoSource {
-  protected mediastream?: MediaStream;
+  protected mediaStream?: MediaStream
   constructor() {
-    super();
+    super()
   }
 
   async startCapture(constraints: MediaTrackConstraints) {
     const media = await navigator.mediaDevices.getUserMedia({
       video: constraints,
-    });
-    this.mediastream = media;
-    this.video.srcObject = media;
-    this.video.play();
+    })
+    this.mediaStream = media
+    this.video.srcObject = media
+    this.video.play()
   }
 
   stopCapture() {
     // 释放所与的audiotrack和videotrack
-    this.mediastream?.getTracks().map((track) => {
-      track.stop();
-    });
-    this.mediastream = undefined;
+    this.mediaStream?.getTracks().map((track) => {
+      track.stop()
+    })
+    this.mediaStream = undefined
   }
 
   dispose(): void {
-    this.stopCapture();
-    delete this.mediastream;
-    super.dispose();
+    this.stopCapture()
+    delete this.mediaStream
+    super.dispose()
   }
 
   static async getCameraList() {
-    const list = await navigator.mediaDevices.enumerateDevices();
-    return list.filter((device) => device.kind === 'videoinput');
+    const list = await navigator.mediaDevices.enumerateDevices()
+    return list.filter((device) => device.kind === 'videoinput')
   }
 
   static async requestUserMediaPermission() {
     const media = await navigator.mediaDevices.getUserMedia({
       video: true,
       audio: true,
-    });
+    })
     media?.getTracks().map((track) => {
-      track.stop();
-    });
+      track.stop()
+    })
   }
   static createAndInit(constraint: WebCameraVideoSourceConstraintType) {
-    const source = new WebCameraVideoSource();
-    source.startCapture(constraint as MediaTrackConstraintSet);
-    return source;
+    const source = new WebCameraVideoSource()
+    source.startCapture(constraint as MediaTrackConstraintSet)
+    return source
   }
 }

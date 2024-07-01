@@ -1,45 +1,45 @@
-import { ISourSize } from '../interface';
-import { BaseVideoSource } from './BaseSource';
+import { ISourSize } from '../interface'
+import { BaseVideoSource } from './BaseSource'
 
 export type WebDisplayVideoSourceConstraintType = {
-  mediaStream?: MediaStream;
-};
+  mediaStream?: MediaStream
+}
 
 export default class WebDisplayVideoSource extends BaseVideoSource {
-  protected mediastream?: MediaStream;
+  protected mediaStream?: MediaStream
 
   constructor() {
-    super();
+    super()
   }
   startCapture(media: MediaStream): void {
-    this.mediastream = media;
-    this.video.srcObject = media;
-    this.video.play();
+    this.mediaStream = media
+    this.video.srcObject = media
+    this.video.play()
   }
   stopCapture() {
-    // 释放所与的audiotrack和videotrack
-    this.mediastream?.getTracks().map((track) => {
-      track.stop();
-    });
-    this.mediastream = undefined;
+    // 释放所与的 audiotrack 和 videotrack
+    this.mediaStream?.getTracks().map((track) => {
+      track.stop()
+    })
+    this.mediaStream = undefined
   }
   dispose(): void {
-    this.stopCapture();
-    delete this.mediastream;
-    super.dispose();
+    this.stopCapture()
+    delete this.mediaStream
+    super.dispose()
   }
 
   static async getDisplayMediaStream(): Promise<{
-    mediaStream: MediaStream;
-    size: ISourSize;
+    mediaStream: MediaStream
+    size: ISourSize
   }> {
-    const mediaStream = await navigator.mediaDevices.getDisplayMedia();
-    const video = document.createElement('video');
-    video.srcObject = mediaStream;
-    video.muted = true;
-    video.play();
+    const mediaStream = await navigator.mediaDevices.getDisplayMedia()
+    const video = document.createElement('video')
+    video.srcObject = mediaStream
+    video.muted = true
+    video.play()
     function dispose() {
-      video.srcObject = null;
+      video.srcObject = null
     }
     return new Promise((resolve, reject) => {
       video.addEventListener(
@@ -52,25 +52,25 @@ export default class WebDisplayVideoSource extends BaseVideoSource {
               width: video.videoWidth,
               aspectRatio: video.videoWidth / video.videoHeight,
             },
-          });
-          dispose();
+          })
+          dispose()
         },
         { once: true }
-      );
+      )
       video.addEventListener('error', (e) => {
-        dispose();
-        reject(e);
-      });
-    });
+        dispose()
+        reject(e)
+      })
+    })
   }
 
   static createAndInit(constraint: WebDisplayVideoSourceConstraintType) {
-    const source = new WebDisplayVideoSource();
+    const source = new WebDisplayVideoSource()
     if (constraint.mediaStream) {
-      source.startCapture(constraint.mediaStream);
+      source.startCapture(constraint.mediaStream)
     } else {
-      throw new Error('need mediaStream');
+      throw new Error('need mediaStream')
     }
-    return source;
+    return source
   }
 }
