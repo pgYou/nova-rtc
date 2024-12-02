@@ -1,3 +1,4 @@
+// @ts-nocheck
 // copy from https://github.com/bilibili/WebAV/blob/main/packages/av-cliper/src/chromakey.ts，感谢风痕的教程
 
 const vertexShader = `#version 300 es

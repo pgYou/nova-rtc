@@ -1,3 +1,11 @@
+.title {
+  text-align: center;
+}
+.opt {
+  margin-right: 8px;
+  height: 32px;
+  vertical-align: middle;
+}
 .rtc-view-wrapper {
   margin: auto;
   position: relative;

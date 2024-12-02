@@ -1,26 +1,27 @@
-import { useEffect, useState } from 'react';
-import { SourceConfigType, WebRtc, WebVisionSourceType } from 'nova-rtc';
+import { useEffect, useState } from 'react'
+import { SourceConfigType, WebRtc, WebVisionSourceType } from 'nova-rtc'
 const src =
-  'https://picx.zhimg.com/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpg?source=172ae18b';
+  'https://picx.zhimg.com/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpg?source=172ae18b'
+
 export function useSourceManager(
   webRtcRef: React.MutableRefObject<WebRtc | undefined>
 ) {
-  const [list, setList] = useState<SourceConfigType[]>([]);
+  const [list, setList] = useState<SourceConfigType[]>([])
 
   useEffect(() => {
-    if (!webRtcRef.current) return;
-    const webRtc = webRtcRef.current;
+    if (!webRtcRef.current) return
+    const webRtc = webRtcRef.current
     async function init() {
-      const cameras = await webRtc.getCameraList();
+      const cameras = await webRtc.getCameraList()
 
-      const imgSize = await webRtc.measureImage(src);
-      let width = 800;
+      const imgSize = await webRtc.measureImage(src)
+      let width = 800
 
-      // const display = await webRtc.getDisplayMediaStream();
+      const display = await webRtc.getDisplayMediaStream()
 
-      const text = '😎NOVA-RTC';
-      const textHeight = 250;
-      const { aspectRatio: textAspectRatio } = webRtc.measureText(text);
+      const text = '😎 Hello WebRTC'
+      const textHeight = 200
+      const { aspectRatio: textAspectRatio } = webRtc.measureText(text)
       setList([
         {
           deviceId: cameras[0].deviceId,
@@ -37,34 +38,34 @@ export function useSourceManager(
             height: 1080 / 2,
           },
         },
-        {
-          deviceId: 'image',
-          sourceType: WebVisionSourceType.webimage,
-          constraint: {
-            src,
-          },
-          order: 1,
-          rect: {
-            x: 1920 / 2 + 50,
-            y: 0,
-            width,
-            height: width / imgSize.aspectRatio,
-          },
-        },
         // {
-        //   deviceId: 'display1',
-        //   sourceType: WebVisionSourceType.webdisplay,
+        //   deviceId: 'image',
+        //   sourceType: WebVisionSourceType.webimage,
         //   constraint: {
-        //     mediaStream: display.mediaStream,
+        //     src,
         //   },
-        //   order: 3,
+        //   order: 1,
         //   rect: {
-        //     x: 0,
-        //     y: 1080 / 2,
-        //     width: width,
-        //     height: width / display.size.aspectRatio,
+        //     x: 1920 / 2 + 50,
+        //     y: 0,
+        //     width,
+        //     height: width / imgSize.aspectRatio,
         //   },
         // },
+        {
+          deviceId: 'display1',
+          sourceType: WebVisionSourceType.webdisplay,
+          constraint: {
+            mediaStream: display.mediaStream,
+          },
+          order: 3,
+          rect: {
+            x: 0,
+            y: 1080 / 2,
+            width: width,
+            height: width / display.size.aspectRatio,
+          },
+        },
         {
           deviceId: text,
           sourceType: WebVisionSourceType.text,
@@ -82,34 +83,34 @@ export function useSourceManager(
             height: textHeight,
           },
         },
-      ]);
+      ])
     }
-    init();
-  }, [webRtcRef.current]);
+    init()
+  }, [webRtcRef.current])
 
   useEffect(() => {
     if (webRtcRef.current) {
-      webRtcRef.current.updateSourceList(list);
+      webRtcRef.current.updateSourceList(list)
     }
-  }, [list]);
+  }, [list])
 
   function updateSource(source: SourceConfigType) {
-    const idx = list.findIndex((item) => item.deviceId === source.deviceId);
+    const idx = list.findIndex((item) => item.deviceId === source.deviceId)
     if (idx > -1) {
-      list[idx] = source;
+      list[idx] = source
     }
-    setList([...list]);
+    setList([...list])
   }
   function addSource(source: SourceConfigType) {
-    setList([...list, source]);
+    setList([...list, source])
   }
   function removeSource(id: string) {
-    const idx = list.findIndex((item) => item.deviceId === id);
+    const idx = list.findIndex((item) => item.deviceId === id)
     if (idx >= 0) {
-      const newList = [...list];
-      newList.splice(idx, 1);
-      setList(newList);
+      const newList = [...list]
+      newList.splice(idx, 1)
+      setList(newList)
     }
   }
-  return { updateSource, addSource, removeSource, list };
+  return { updateSource, addSource, removeSource, list }
 }
