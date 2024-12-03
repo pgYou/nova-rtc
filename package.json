@@ -5,6 +5,7 @@
   "main": "./dist/index.js",
   "scripts": {
     "test": "",
+    "build": "tsc",
     "start": "tsc -w"
   },
   "author": "pgYou",

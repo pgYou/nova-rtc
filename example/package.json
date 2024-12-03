@@ -6,7 +6,7 @@
     "start": "vite",
     "dev": "vite",
     "build": "tsc && vite build",
-    "build-page": "tsc && vite build --base=/webrtc_demo",
+    "build-page": "tsc && vite build --base=/webrtc_demo/",
     "preview": "vite preview"
   },
   "dependencies": {
